@@ -1,60 +1,90 @@
-# ControleDeEstoque
-Aplicação web para gerenciamento de produtos e organização de estoque, utilizando JavaScript e LocalStorage. (Em Desenvolvimento, Aprendendo e Evoluindo)
+# Sistema Abrahão — Controle de Estoque
 
-v# Controle de Estoque Casa 🏠📦
+Sistema web completo para gerenciamento de estoque doméstico, lista de compras, controle financeiro e dashboard de análise. PWA responsivo que funciona offline.
 
-Sistema web desenvolvido para controle de produtos e organização de estoque doméstico.
+**Acesse:** [abrahamolife.github.io/ControleDeEstoque](https://abrahamolife.github.io/ControleDeEstoque/)
 
-## 📌 Sobre o projeto
+## Funcionalidades
 
-Este projeto foi criado com o objetivo de praticar desenvolvimento web utilizando HTML, CSS e JavaScript.
+### Estoque
+- Cadastro, edição e exclusão de produtos
+- Controle de quantidade e estoque mínimo
+- Categorias automáticas (Alimentos, Limpeza, Higiene, Bebidas, Outros)
+- Busca e filtros por categoria
+- Alertas de estoque baixo
 
-A aplicação permite cadastrar produtos, visualizar itens do estoque e organizar informações de forma simples e prática.
+### Lista de Compras
+- Itens gerados automaticamente a partir do estoque baixo
+- Adição manual de itens com quantidade
+- Subtags de produtos mais comprados
+- Autocomplete com categorias
 
-## 🚀 Funcionalidades
+### Financeiro
+- Definição de saldo inicial mensal
+- Registro de despesas livres com categorias
+- Subtags de categorias (Alimentação, Lazer, Transporte, Saúde, Contas, Educação, Vestuário, Outros)
+- Autocomplete baseado em despesas anteriores
+- Detecção automática de categoria por palavra-chave
+- Histórico de despesas com filtros
 
-- ✅ Adicionar produtos
-- ✅ Exibir produtos em cards
-- ✅ Remover produtos
-- ✅ Editar produtos
-- ✅ Salvar dados no navegador utilizando LocalStorage
-- ✅ Organização por categorias
+### Dashboard
+- Cards de resumo (saldo, gastos, produtos, estoque baixo)
+- Gráfico "Onde foi o dinheiro?" por categoria
+- Últimas despesas e atividade recente
+- Gráfico de barras de gastos por mês
+- Histórico de meses anteriores
 
-## 🛠️ Tecnologias utilizadas
+### Extras
+- Modo escuro
+- Exportar/importar dados (JSON)
+- Notificações com som
+- Splash screen animada
+- PWA com funcionamento offline
+- Design responsivo (desktop e celular)
+
+## Tecnologias
 
 - HTML5
-- CSS3
-- JavaScript
+- CSS8 (modular)
+- JavaScript vanilla (modular)
 - LocalStorage
+- Service Worker (PWA)
 
-## 📚 O que aprendi neste projeto
+## Como usar
 
-Durante o desenvolvimento pratiquei:
+### Online
+Acesse: [abrahamolife.github.io/ControleDeEstoque](https://abrahamolife.github.io/ControleDeEstoque/)
 
-- Manipulação do DOM
-- Criação de elementos com JavaScript
-- Eventos de clique
-- Armazenamento de dados no navegador
-- Estruturação de páginas web
-- Estilização com CSS
+### Local
+1. Clone o repositório
+2. Abra `index.html` no navegador
 
-## 📷 Demonstração
+## Estrutura
 
-Em Desenvolvimento
-
-## 🔧 Como executar o projeto
-
-1. Clone este repositório:
-
-2. Abra o arquivo:
-
-index.html
-
-3. Execute no navegador.
-
-## 📈 Próximas melhorias
-
-- [ ] Adicionar sistema de login
-- [ ] Criar banco de dados
-- [ ] Melhorar responsividade para celular
-- [ ] Adicionar filtros avançados
+```
+├── index.html
+├── manifest.json
+├── service-worker.js
+├── assets/          # Ícones PWA
+├── sons/            # Sons de notificação
+├── css/             # Estilos modulares
+│   ├── base.css
+│   ├── cards.css
+│   ├── dashboard.css
+│   ├── forms.css
+│   ├── modal.css
+│   ├── notifications.css
+│   ├── responsive.css
+│   └── splash.css
+└── js/              # Lógica modular
+    ├── dados.js
+    ├── notificacoes.js
+    ├── estoque.js
+    ├── filtros.js
+    ├── financeiro.js
+    ├── modal.js
+    ├── compras.js
+    ├── polish.js
+    ├── dashboard.js
+    └── app.js
+```

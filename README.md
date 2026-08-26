@@ -2,7 +2,7 @@
 
 Sistema web completo para gerenciamento de estoque doméstico, lista de compras, controle financeiro e dashboard de análise. PWA responsivo que funciona offline.
 
-**Acesse:** [abrahamolife.github.io/ControleDeEstoque](https://abrahamolife.github.io/ControleDeEstoque/)
+**Acesse:** [abrahaolife.github.io/ControleDeEstoque](https://abrahaolife.github.io/ControleDeEstoque/)
 
 ## Funcionalidades
 
@@ -53,7 +53,7 @@ Sistema web completo para gerenciamento de estoque doméstico, lista de compras,
 ## Como usar
 
 ### Online
-Acesse: [abrahamolife.github.io/ControleDeEstoque](https://abrahamolife.github.io/ControleDeEstoque/)
+Acesse: [abrahaolife.github.io/ControleDeEstoque](https://abrahaolife.github.io/ControleDeEstoque/)
 
 ### Local
 1. Clone o repositório

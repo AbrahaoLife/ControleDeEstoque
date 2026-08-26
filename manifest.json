@@ -1,6 +1,6 @@
 {
     "name": "Sistema Abrahão - Controle de Estoque",
-    "short_name": "EstoqueAbrahan",
+    "short_name": "Estoque Abrahão",
     "description": "Sistema de controle de estoque doméstico da família Abrahão",
     "start_url": "./index.html",
     "scope": "./",

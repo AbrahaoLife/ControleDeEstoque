@@ -1,45 +1,568 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Controle de Estoque</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <h1>Controle de Estoque</h1>
-    <p>Organize o estoque da sua casa</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sistema Abrahão</title>
+    <meta name="description" content="Controle de estoque doméstico da família Abrahão">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Estoque Abrahão">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/splash.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/notifications.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
 
-    <div class="Categorias">
-      <button id="todos">Todos</button>
-      <button id="alimentos">Alimentos</button>
-      <button id="limpeza">Limpeza</button>
-      <button id="higiene">Higiene</button>
-      <button id="bebidas">Bebidas</button>
-      <button id="outros">Outros</button>
+<body>
+
+    <!-- ==========================
+         SPLASH SCREEN
+    =========================== -->
+
+    <div class="splash" id="splash">
+        <div class="splash-conteudo">
+            <div class="splash-logo">
+                <span class="splash-icone">📦</span>
+            </div>
+            <h1 class="splash-titulo">Sistema Abrahão</h1>
+            <p class="splash-sub">Controle de Estoque</p>
+            <div class="splash-loader">
+                <div class="splash-barra"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="formulario">
-      <input id="nomeProduto" placeholder="Nome do produto" />
 
-      <input id="quantidadeProduto" placeholder="Quantidade" />
+    <!-- ==========================
+         SIDEBAR
+    =========================== -->
 
-      <select id="categoriaProduto">
-        <option>Alimentos</option>
-        <option>Limpeza</option>
-        <option>Higiene</option>
-        <option>Bebidas</option>
-        <option>Outros</option>
-      </select>
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <span class="sidebar-logo-icone">📦</span>
+            <span class="sidebar-logo-texto">Sistema Abrahão</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <button class="sidebar-link ativo" data-pagina="estoque">
+                <span class="sidebar-link-icone">📦</span>
+                <span class="sidebar-link-texto">Estoque</span>
+            </button>
+
+            <button class="sidebar-link" data-pagina="compras">
+                <span class="sidebar-link-icone">🛒</span>
+                <span class="sidebar-link-texto">Compras</span>
+            </button>
+
+            <button class="sidebar-link" data-pagina="financeiro">
+                <span class="sidebar-link-icone">💰</span>
+                <span class="sidebar-link-texto">Financeiro</span>
+            </button>
+
+            <button class="sidebar-link" data-pagina="dashboard">
+                <span class="sidebar-link-icone">📊</span>
+                <span class="sidebar-link-texto">Dashboard</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-botoes">
+                <button class="sidebar-btn" id="exportarBtn" title="Exportar dados">
+                    📥 Exportar
+                </button>
+                <button class="sidebar-btn" id="importarBtn" title="Importar dados">
+                    📤 Importar
+                </button>
+                <input type="file" id="importarArquivo" accept=".json" style="display:none">
+            </div>
+            <span class="sidebar-versao">v2.0</span>
+        </div>
+
+    </aside>
+
+
+    <!-- ==========================
+         ÁREA PRINCIPAL
+    =========================== -->
+
+    <div class="principal">
+
+        <!-- ==========================
+             NAVBAR
+        =========================== -->
+
+        <header class="navbar">
+            <button class="navbar-menu" id="menuToggle">
+                ☰
+            </button>
+            <h1 class="navbar-titulo" id="navbarTitulo">Estoque</h1>
+            <div class="navbar-info">
+                <span id="navbarData"></span>
+                <button class="navbar-tema" id="temaToggle" title="Alternar tema">
+                    🌙
+                </button>
+            </div>
+        </header>
+
+
+        <!-- ==========================
+             CONTEÚDO
+        =========================== -->
+
+        <main class="conteudo">
+
+            <!-- ==========================
+                 PÁGINA: ESTOQUE
+            =========================== -->
+
+            <div class="pagina ativo" id="pagina-estoque">
+
+                <div class="resumo">
+                    <div class="card-resumo">
+                        <span>📦</span>
+                        <div>
+                            <h3>Total de produtos</h3>
+                            <strong id="totalProdutos">0</strong>
+                        </div>
+                    </div>
+                    <div class="card-resumo">
+                        <span>⚠️</span>
+                        <div>
+                            <h3>Estoque baixo</h3>
+                            <strong id="produtosBaixos">0</strong>
+                        </div>
+                    </div>
+                    <div class="card-resumo">
+                        <span>🛒</span>
+                        <div>
+                            <h3>Lista de compras</h3>
+                            <strong id="totalCompras">0</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="secao">
+                    <section class="pesquisa">
+                        <input
+                            type="text"
+                            id="pesquisaProduto"
+                            placeholder="Pesquisar produto..."
+                        >
+                    </section>
+                    <div class="Categorias">
+                        <button id="todos" class="ativo">Todos</button>
+                        <button id="alimentos">Alimentos</button>
+                        <button id="limpeza">Limpeza</button>
+                        <button id="higiene">Higiene</button>
+                        <button id="bebidas">Bebidas</button>
+                        <button id="outros">Outros</button>
+                    </div>
+                </section>
+
+                <section class="secao">
+                    <section class="formulario">
+                        <div class="campo-produto">
+                            <input
+                                type="text"
+                                id="nomeProduto"
+                                placeholder="Nome do produto"
+                                autocomplete="off"
+                            >
+                            <div id="sugestoesProdutos" class="sugestoes-produtos"></div>
+                        </div>
+                        <input type="number" id="quantidadeProduto" placeholder="Quantidade" min="0" step="1">
+                        <input type="number" id="estoqueMinimo" placeholder="Estoque mínimo" min="0" step="1">
+                        <select id="categoriaProduto">
+                            <option value="Alimentos">Alimentos</option>
+                            <option value="Limpeza">Limpeza</option>
+                            <option value="Higiene">Higiene</option>
+                            <option value="Bebidas">Bebidas</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </section>
+                    <div id="botoesFormulario">
+                        <button id="adicionar">Adicionar Produto</button>
+                        <button id="cancelarEdicao">Cancelar</button>
+                    </div>
+                </section>
+
+                <section class="secao">
+                    <h2 class="secao-titulo">Estoque</h2>
+                    <div class="produtos" id="listaProdutos"></div>
+                </section>
+
+                <section class="secao">
+                    <h2 class="secao-titulo">Lista de Compras</h2>
+                    <div id="listaCompras"></div>
+                </section>
+
+            </div>
+
+
+            <!-- ==========================
+                 PÁGINA: COMPRAS
+            =========================== -->
+
+            <div class="pagina" id="pagina-compras">
+
+                <div class="resumo">
+                    <div class="card-resumo">
+                        <span>🛒</span>
+                        <div>
+                            <h3>Itens para comprar</h3>
+                            <strong id="comprasTotalItens">0</strong>
+                        </div>
+                    </div>
+                    <div class="card-resumo">
+                        <span>⚠️</span>
+                        <div>
+                            <h3>Estoque baixo</h3>
+                            <strong id="comprasEstoqueBaixo">0</strong>
+                        </div>
+                    </div>
+                    <div class="card-resumo">
+                        <span>📦</span>
+                        <div>
+                            <h3>Total no estoque</h3>
+                            <strong id="comprasTotalEstoque">0</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="secao">
+                    <h2 class="secao-titulo">Adicionar à Lista</h2>
+                    <div class="despesa-row">
+                        <div class="campo-produto campo-compra-extra">
+                            <input
+                                type="text"
+                                id="compraExtraNome"
+                                placeholder="O que precisa comprar?"
+                                autocomplete="off"
+                            >
+                            <div class="sugestoes" id="sugestoesCompraExtra"></div>
+                        </div>
+                        <input
+                            type="number"
+                            id="compraExtraQtd"
+                            placeholder="Qtd"
+                            min="1"
+                            value="1"
+                        >
+                        <select id="compraExtraCategoria">
+                            <option value="Alimentos">Alimentos</option>
+                            <option value="Limpeza">Limpeza</option>
+                            <option value="Higiene">Higiene</option>
+                            <option value="Bebidas">Bebidas</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                        <button id="compraExtraAdicionar">+</button>
+                    </div>
+
+                    <div class="subtags-compra" id="subtagsCompra">
+                        <button class="subtag" data-subtag="Arroz">🍚 Arroz</button>
+                        <button class="subtag" data-subtag="Feijão">🫘 Feijão</button>
+                        <button class="subtag" data-subtag="Macarrão">🍝 Macarrão</button>
+                        <button class="subtag" data-subtag="Leite">🥛 Leite</button>
+                        <button class="subtag" data-subtag="Café">☕ Café</button>
+                        <button class="subtag" data-subtag="Óleo">🫒 Óleo</button>
+                        <button class="subtag" data-subtag="Açúcar">🍬 Açúcar</button>
+                        <button class="subtag" data-subtag="Ovos">🥚 Ovos</button>
+                        <button class="subtag" data-subtag="Carne">🥩 Carne</button>
+                        <button class="subtag" data-subtag="Frango">🍗 Frango</button>
+                        <button class="subtag" data-subtag="Pão">🍞 Pão</button>
+                        <button class="subtag" data-subtag="Banana">🍌 Banana</button>
+                        <button class="subtag" data-subtag="Refrigerante">🥤 Refrigerante</button>
+                        <button class="subtag" data-subtag="Sabonete">🧼 Sabonete</button>
+                        <button class="subtag" data-subtag="Detergente">🫧 Detergente</button>
+                        <button class="subtag" data-subtag="Papel higiênico">🧻 Papel higiênico</button>
+                        <button class="subtag" data-subtag="Shampoo">🧴 Shampoo</button>
+                        <button class="subtag" data-subtag="Água">💧 Água</button>
+                    </div>
+                </section>
+
+                <section class="secao">
+                    <div class="Categorias">
+                        <button class="cat-compra ativo" data-categoria-compra="Todos">Todos</button>
+                        <button class="cat-compra" data-categoria-compra="Alimentos">Alimentos</button>
+                        <button class="cat-compra" data-categoria-compra="Limpeza">Limpeza</button>
+                        <button class="cat-compra" data-categoria-compra="Higiene">Higiene</button>
+                        <button class="cat-compra" data-categoria-compra="Bebidas">Bebidas</button>
+                        <button class="cat-compra" data-categoria-compra="Outros">Outros</button>
+                    </div>
+                </section>
+
+                <section class="secao">
+                    <h2 class="secao-titulo">Lista de Compras</h2>
+                    <div id="listaComprasPagina"></div>
+                    <div id="listaComprasExtras"></div>
+                </section>
+
+            </div>
+
+
+            <!-- ==========================
+                 PÁGINA: FINANCEIRO
+            =========================== -->
+
+            <div class="pagina" id="pagina-financeiro">
+
+                <div class="resumo">
+                    <div class="card-resumo">
+                        <span>💰</span>
+                        <div>
+                            <h3>Saldo Inicial</h3>
+                            <strong id="finSaldoInicial">R$ 0,00</strong>
+                        </div>
+                    </div>
+                    <div class="card-resumo">
+                        <span>💸</span>
+                        <div>
+                            <h3>Total Despesas</h3>
+                            <strong id="finTotalDespesas">R$ 0,00</strong>
+                        </div>
+                    </div>
+                    <div class="card-resumo">
+                        <span>📊</span>
+                        <div>
+                            <h3>Saldo Atual</h3>
+                            <strong id="finSaldoAtual">R$ 0,00</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="secao">
+                    <h2 class="secao-titulo">Definir Saldo Inicial do Mês</h2>
+                    <section class="formulario">
+                        <input
+                            type="number"
+                            id="finSaldoInput"
+                            placeholder="Valor (ex: 2000)"
+                            step="0.01"
+                            min="0"
+                        >
+                    </section>
+                    <div id="botoesFormularioFinanceiro">
+                        <button id="finSalvarSaldo">Salvar Saldo</button>
+                    </div>
+                </section>
+
+                <section class="secao">
+                    <h2 class="secao-titulo">Registrar Despesa Livre</h2>
+                    <div class="despesa-row">
+                        <div class="campo-produto campo-compra-extra">
+                            <input
+                                type="text"
+                                id="finDescricao"
+                                placeholder="O que foi? (ex: Cinema, iFood, Gasolina...)"
+                                autocomplete="off"
+                            >
+                            <div class="sugestoes" id="sugestoesDespesa"></div>
+                        </div>
+                        <input
+                            type="number"
+                            id="finValor"
+                            placeholder="R$"
+                            step="0.01"
+                            min="0"
+                        >
+                        <select id="finCategoriaDespesa">
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Contas">Contas</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Vestuário">Vestuário</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                        <button id="finAdicionarDespesa">+</button>
+                    </div>
+
+                    <div class="subtags-compra" id="subtagsDespesa">
+                        <button class="subtag subtag-despesa" data-cat-despesa="Alimentação">🍔 Alimentação</button>
+                        <button class="subtag subtag-despesa" data-cat-despesa="Lazer">🎬 Lazer</button>
+                        <button class="subtag subtag-despesa" data-cat-despesa="Transporte">🚗 Transporte</button>
+                        <button class="subtag subtag-despesa" data-cat-despesa="Saúde">💊 Saúde</button>
+                        <button class="subtag subtag-despesa" data-cat-despesa="Contas">🏠 Contas</button>
+                        <button class="subtag subtag-despesa" data-cat-despesa="Educação">📚 Educação</button>
+                        <button class="subtag subtag-despesa" data-cat-despesa="Vestuário">👕 Vestuário</button>
+                        <button class="subtag subtag-despesa" data-cat-despesa="Outros">📦 Outros</button>
+                    </div>
+                </section>
+
+                <section class="secao">
+                    <h2 class="secao-titulo">Histórico de Despesas</h2>
+                    <div class="Categorias">
+                        <button class="cat-financeiro ativo" data-categoria-financeiro="Todos">Todos</button>
+                        <button class="cat-financeiro" data-categoria-financeiro="Alimentação">Alimentação</button>
+                        <button class="cat-financeiro" data-categoria-financeiro="Lazer">Lazer</button>
+                        <button class="cat-financeiro" data-categoria-financeiro="Transporte">Transporte</button>
+                        <button class="cat-financeiro" data-categoria-financeiro="Saúde">Saúde</button>
+                        <button class="cat-financeiro" data-categoria-financeiro="Contas">Contas</button>
+                        <button class="cat-financeiro" data-categoria-financeiro="Educação">Educação</button>
+                        <button class="cat-financeiro" data-categoria-financeiro="Vestuário">Vestuário</button>
+                        <button class="cat-financeiro" data-categoria-financeiro="Outros">Outros</button>
+                    </div>
+                    <div id="finHistorico"></div>
+                </section>
+
+            </div>
+
+
+            <!-- ==========================
+                 PÁGINA: DASHBOARD
+            =========================== -->
+
+            <div class="pagina" id="pagina-dashboard">
+
+                <div class="resumo">
+                    <div class="card-resumo">
+                        <span>💰</span>
+                        <div>
+                            <h3>Saldo do Mês</h3>
+                            <strong id="dashSaldoMes">R$ 0,00</strong>
+                        </div>
+                    </div>
+                    <div class="card-resumo">
+                        <span>💸</span>
+                        <div>
+                            <h3>Gasto no Mês</h3>
+                            <strong id="dashGastoMes">R$ 0,00</strong>
+                        </div>
+                    </div>
+                    <div class="card-resumo">
+                        <span>📦</span>
+                        <div>
+                            <h3>Produtos</h3>
+                            <strong id="dashTotalProdutos">0</strong>
+                        </div>
+                    </div>
+                    <div class="card-resumo">
+                        <span>⚠️</span>
+                        <div>
+                            <h3>Estoque Baixo</h3>
+                            <strong id="dashEstoqueBaixo">0</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="secao dash-card">
+                    <h2 class="secao-titulo">Onde foi o dinheiro?</h2>
+                    <div id="dashGraficoCategorias"></div>
+                </section>
+
+                <section class="secao dash-card">
+                    <h2 class="secao-titulo">Últimas Despesas</h2>
+                    <div id="dashDespesasRecentes"></div>
+                </section>
+
+                <div class="dash-grid">
+
+                    <section class="secao dash-card">
+                        <h2 class="secao-titulo">Estoque por Categoria</h2>
+                        <div id="dashEstoqueCat"></div>
+                    </section>
+
+                    <section class="secao dash-card">
+                        <h2 class="secao-titulo">Atividade Recente</h2>
+                        <div id="dashAtividade"></div>
+                    </section>
+
+                </div>
+
+                <section class="secao dash-card">
+                    <h2 class="secao-titulo">Gastos por Mês</h2>
+                    <div id="dashGraficoMeses"></div>
+                </section>
+
+                <section class="secao dash-card">
+                    <h2 class="secao-titulo">Histórico de Meses</h2>
+                    <div id="dashHistoricoMeses"></div>
+                </section>
+
+            </div>
+
+        </main>
+
     </div>
 
-    <button id="adicionar">Adicionar Produto</button>
-    <p id="mensagem"></p>
 
-    <div class="produtos" id="listaProdutos"></div>
+    <!-- ==========================
+         MODAL VALOR COMPRA
+    =========================== -->
+
+    <div class="modal-overlay" id="modalValor">
+        <div class="modal">
+            <div class="modal-topo">
+                <span class="modal-icone">🛒</span>
+                <h3>Quanto pagou?</h3>
+            </div>
+            <p class="modal-produto" id="modalProdutoNome"></p>
+            <div class="modal-campo">
+                <label>Valor pago (R$)</label>
+                <input
+                    type="number"
+                    id="modalValorInput"
+                    placeholder="0,00"
+                    step="0.01"
+                    min="0"
+                    autocomplete="off"
+                    autofocus
+                >
+            </div>
+            <div class="modal-botoes">
+                <button class="modal-btn modal-btn-cancelar" id="modalCancelar">
+                    Pular
+                </button>
+                <button class="modal-btn modal-btn-confirmar" id="modalConfirmar">
+                    Registrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==========================
+         NOTIFICAÇÕES
+    =========================== -->
 
     <div id="notificacoes"></div>
-    <script src="script.js"></script>
-  </body>
+
+    <script src="js/dados.js"></script>
+    <script src="js/notificacoes.js"></script>
+    <script src="js/estoque.js"></script>
+    <script src="js/filtros.js"></script>
+    <script src="js/financeiro.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/compras.js"></script>
+    <script src="js/polish.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function() {
+                navigator.serviceWorker.register("/service-worker.js", {
+                    scope: "/"
+                });
+            });
+        }
+    </script>
+
+</body>
+
 </html>

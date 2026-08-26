@@ -1,0 +1,577 @@
+/* ==============================
+   RESPONSIVIDADE
+=============================== */
+
+/* ---- ATÉ 800px (tablets) ---- */
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.aberto {
+        transform: translateX(0);
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .principal {
+        margin-left: 0;
+    }
+
+    .navbar-menu {
+        display: block;
+    }
+
+    .resumo {
+        grid-template-columns: 1fr;
+    }
+
+    .formulario {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .campo-produto {
+        grid-column: span 2;
+    }
+
+    .dash-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- ATÉ 500px (celulares) ---- */
+
+@media (max-width: 500px) {
+
+    body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+        height: 46px;
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .navbar-titulo {
+        font-size: 14px;
+    }
+
+    #navbarData {
+        display: none;
+    }
+
+    .navbar-tema {
+        padding: 3px 6px;
+        font-size: 13px;
+    }
+
+    /* CONTEÚDO */
+
+    .conteudo {
+        padding: 10px 8px;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .principal {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    .pagina {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    /* SEÇÕES */
+
+    .secao {
+        margin-bottom: 14px;
+    }
+
+    .secao-titulo {
+        font-size: 11px;
+        margin-bottom: 6px;
+    }
+
+    /* CARDS RESUMO */
+
+    .resumo {
+        gap: 6px;
+        margin-bottom: 14px;
+    }
+
+    .card-resumo {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .card-resumo > span {
+        width: 32px;
+        height: 32px;
+        font-size: 15px;
+    }
+
+    .card-resumo h3 {
+        font-size: 10px;
+    }
+
+    .card-resumo strong {
+        font-size: 18px;
+    }
+
+    /* CATEGORIAS / FILTROS */
+
+    .Categorias {
+        gap: 4px;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 2px;
+        margin-bottom: 6px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .Categorias button {
+        padding: 5px 8px;
+        font-size: 10px;
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+    /* PESQUISA */
+
+    #pesquisaProduto {
+        padding: 8px 10px 8px 32px;
+        font-size: 13px;
+        border-radius: 7px;
+    }
+
+    /* FORMULÁRIO ESTOQUE */
+
+    .formulario {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        margin-bottom: 6px;
+    }
+
+    .campo-produto {
+        grid-column: span 1;
+    }
+
+    .formulario input,
+    .formulario select {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    /* DESPESA / ADICIONAR LISTA */
+
+    .despesa-row {
+        flex-wrap: wrap;
+        gap: 6px;
+        max-width: 100%;
+    }
+
+    .despesa-row > .campo-produto,
+    .despesa-row > .campo-compra-extra {
+        flex: 1 1 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .despesa-row > .campo-compra-extra .sugestoes,
+    .despesa-row > .campo-compra-extra .sugestoes-produtos,
+    .despesa-row > .campo-produto .sugestoes,
+    .despesa-row > .campo-produto .sugestoes-produtos {
+        max-width: calc(100vw - 16px);
+    }
+
+    .despesa-row > input,
+    .despesa-row > select {
+        padding: 8px 10px;
+        font-size: 13px;
+        min-width: 0;
+        flex: 1 1 0;
+    }
+
+    #compraExtraQtd {
+        flex: 0 0 50px;
+        max-width: 50px;
+        padding: 8px 4px;
+        text-align: center;
+    }
+
+    #compraExtraAdicionar {
+        flex: 0 0 38px;
+        max-width: 38px;
+    }
+
+    #finAdicionarDespesa {
+        flex: 0 0 38px;
+        max-width: 38px;
+        width: 38px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    /* SUBTAGS - ESCONDIDAS NO CELULAR */
+
+    .subtags-compra {
+        display: none;
+    }
+
+    /* BOTÕES FORMULÁRIO */
+
+    #botoesFormulario,
+    #botoesFormularioFinanceiro {
+        margin-bottom: 0;
+        gap: 6px;
+    }
+
+    #botoesFormulario button,
+    #botoesFormularioFinanceiro button {
+        padding: 8px 14px;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    #finSalvarSaldo {
+        width: 100%;
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    /* PRODUTOS */
+
+    .produtos {
+        gap: 8px;
+    }
+
+    .produto {
+        padding: 10px 12px;
+        gap: 2px;
+    }
+
+    .produto h3 {
+        font-size: 13px;
+    }
+
+    .produto p {
+        font-size: 11px;
+    }
+
+    .produto button {
+        padding: 6px 10px;
+        font-size: 11px;
+        margin-top: 6px;
+    }
+
+    /* COMPRAS */
+
+    #listaCompras,
+    #listaComprasPagina,
+    #listaComprasExtras {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .compra {
+        padding: 10px 12px;
+    }
+
+    .informacoes-compra {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+    }
+
+    .info-compra {
+        padding: 5px 6px;
+    }
+
+    .info-compra span {
+        font-size: 9px;
+    }
+
+    .info-compra strong {
+        font-size: 12px;
+    }
+
+    .compra .comprei {
+        padding: 7px;
+        font-size: 12px;
+    }
+
+    .compra-topo {
+        gap: 6px;
+        margin-bottom: 6px;
+    }
+
+    .compra-topo h3 {
+        font-size: 13px;
+    }
+
+    .icone-compra {
+        font-size: 15px;
+    }
+
+    .compra-extra {
+        padding: 8px 10px;
+    }
+
+    .compra-extra .informacoes-compra {
+        grid-template-columns: auto;
+    }
+
+    .compra-extra .informacoes-compra .info-compra {
+        padding: 3px 8px;
+    }
+
+    .compra-extra .informacoes-compra .info-compra strong {
+        font-size: 12px;
+    }
+
+    .compra-extra-badge {
+        font-size: 9px;
+        padding: 2px 6px;
+    }
+
+    .compra-botoes {
+        gap: 6px;
+        margin-top: 2px;
+    }
+
+    .compra-botoes .comprei {
+        padding: 6px;
+        font-size: 11px;
+    }
+
+    .compra-botoes .compra-excluir {
+        width: 28px;
+        height: 28px;
+        font-size: 10px;
+    }
+
+    /* HISTÓRICO DESPESAS */
+
+    #finHistorico {
+        max-width: 100%;
+    }
+
+    .despesa-item {
+        padding: 8px 10px;
+        gap: 6px;
+    }
+
+    .despesa-nome {
+        font-size: 12px;
+        min-width: 0;
+        flex: 1 1 auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .despesa-valor {
+        font-size: 12px;
+        flex-shrink: 0;
+    }
+
+    .despesa-cat {
+        font-size: 9px;
+        padding: 2px 5px;
+        flex-shrink: 0;
+    }
+
+    .despesa-data {
+        font-size: 10px;
+        flex-shrink: 0;
+    }
+
+    .despesa-excluir {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+        flex-shrink: 0;
+    }
+
+    /* DASHBOARD */
+
+    .dash-card {
+        padding: 12px 14px;
+    }
+
+    .dash-barra-item {
+        margin-bottom: 8px;
+    }
+
+    .dash-barra-nome {
+        font-size: 12px;
+    }
+
+    .dash-barra-valor {
+        font-size: 12px;
+    }
+
+    .dash-barra-trilha {
+        height: 6px;
+    }
+
+    .dash-atividade-item {
+        padding: 7px 0;
+    }
+
+    .dash-ativ-texto strong {
+        font-size: 12px;
+    }
+
+    .dash-ativ-texto small {
+        font-size: 10px;
+    }
+
+    .dash-ativ-valor {
+        font-size: 12px;
+    }
+
+    .dash-fin-linha {
+        padding: 5px 0;
+    }
+
+    .dash-fin-linha span {
+        font-size: 12px;
+    }
+
+    .dash-fin-linha strong {
+        font-size: 13px;
+    }
+
+    .dash-mes-nome {
+        font-size: 13px;
+    }
+
+    .dash-mes-status {
+        font-size: 10px;
+    }
+
+    .dash-mes-info span {
+        font-size: 11px;
+    }
+
+    /* GRÁFICO */
+
+    .dash-chart {
+        height: 120px;
+        gap: 3px;
+    }
+
+    .dash-chart-valor {
+        font-size: 7px;
+        top: -14px;
+    }
+
+    .dash-chart-label {
+        font-size: 8px;
+    }
+
+    .dash-chart-legenda {
+        gap: 8px;
+    }
+
+    .dash-chart-leg-item {
+        font-size: 9px;
+    }
+
+    .dash-chart-leg-cor {
+        width: 8px;
+        height: 8px;
+    }
+
+    /* MODAL */
+
+    .modal {
+        max-width: 100%;
+        padding: 18px 14px;
+        border-radius: 12px;
+    }
+
+    .modal-icone {
+        font-size: 20px;
+    }
+
+    .modal-topo h3 {
+        font-size: 14px;
+    }
+
+    .modal-produto {
+        font-size: 12px;
+        padding-left: 30px;
+        margin-bottom: 14px;
+    }
+
+    .modal-campo label {
+        font-size: 10px;
+        margin-bottom: 4px;
+    }
+
+    .modal-campo input {
+        font-size: 15px;
+        padding: 10px 12px;
+    }
+
+    .modal-btn {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    /* NOTIFICAÇÕES */
+
+    #notificacoes {
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+    }
+
+    .notificacao {
+        font-size: 11px;
+    }
+
+    .conteudo-notificacao {
+        padding: 8px 12px;
+    }
+
+    .icone-notificacao {
+        font-size: 14px;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar-nav {
+        padding: 6px 4px;
+    }
+
+    .sidebar-link {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .sidebar-botoes {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .sidebar-btn {
+        flex: 1 1 45%;
+        font-size: 10px;
+        padding: 5px 0;
+    }
+
+    .sidebar-versao {
+        font-size: 9px;
+    }
+}

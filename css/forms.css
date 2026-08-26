@@ -1,0 +1,358 @@
+/* ==============================
+   PESQUISA
+=============================== */
+
+.pesquisa {
+    margin-bottom: 14px;
+}
+
+#pesquisaProduto {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    background: var(--cor-surface);
+    font-size: 14px;
+    color: var(--cor-texto);
+    outline: none;
+    transition: var(--transicao);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 12px center;
+}
+
+#pesquisaProduto::placeholder {
+    color: var(--cor-texto-terc);
+}
+
+#pesquisaProduto:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* ==============================
+   CATEGORIAS
+=============================== */
+
+.Categorias {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.Categorias button {
+    padding: 7px 14px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 20px;
+    background: var(--cor-surface);
+    color: var(--cor-texto-sec);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.Categorias button:hover {
+    background: var(--cor-texto);
+    border-color: var(--cor-texto);
+    color: #fff;
+}
+
+.Categorias button.ativo {
+    background: var(--cor-texto);
+    border-color: var(--cor-texto);
+    color: #fff;
+}
+
+.Categorias button:active {
+    transform: scale(0.97);
+}
+
+/* ==============================
+   FORMULÁRIO
+=============================== */
+
+.formulario {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.formulario input,
+.formulario select {
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: var(--raio-sm);
+    border: 1px solid var(--cor-borda);
+    background: var(--cor-surface);
+    font-size: 13px;
+    color: var(--cor-texto);
+    outline: none;
+    transition: var(--transicao);
+}
+
+.formulario input::placeholder {
+    color: var(--cor-texto-terc);
+}
+
+.formulario input:focus,
+.formulario select:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* ==============================
+   AUTOCOMPLETE
+=============================== */
+
+.campo-produto {
+    position: relative;
+    width: 100%;
+}
+
+.campo-produto input {
+    width: 100%;
+}
+
+.sugestoes-produtos,
+.sugestoes {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background: var(--cor-surface);
+    border-radius: var(--raio-sm);
+    border: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra-lg);
+    overflow: hidden;
+    z-index: 150;
+    display: none;
+}
+
+.sugestao-produto {
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--cor-texto);
+    transition: background var(--transicao);
+}
+
+.sugestao-produto:hover {
+    background: #f3f4f6;
+}
+
+/* ==============================
+   BOTÕES FORMULÁRIO
+=============================== */
+
+#botoesFormulario,
+#botoesFormularioFinanceiro {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+#adicionar {
+    padding: 9px 20px;
+    background: var(--cor-sucesso);
+    color: #fff;
+    border: none;
+    border-radius: var(--raio-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+#adicionar:hover {
+    background: var(--cor-sucesso-hover);
+}
+
+#adicionar:active {
+    transform: scale(0.97);
+}
+
+#adicionar.editando {
+    background: var(--cor-aviso);
+    color: var(--cor-texto);
+}
+
+#cancelarEdicao {
+    padding: 9px 16px;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-sm);
+    background: var(--cor-surface);
+    color: var(--cor-texto-sec);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+#cancelarEdicao:hover {
+    background: var(--cor-erro);
+    border-color: var(--cor-erro);
+    color: #fff;
+}
+
+/* ==============================
+   BOTÕES FINANCEIRO
+=============================== */
+
+#finSalvarSaldo {
+    padding: 9px 20px;
+    background: var(--cor-primaria);
+    color: #fff;
+    border: none;
+    border-radius: var(--raio-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+#finSalvarSaldo:hover {
+    background: var(--cor-primaria-hover);
+}
+
+#finSalvarSaldo:active {
+    transform: scale(0.97);
+}
+
+/* ==============================
+   DESPESA LIVRE - LINHA CLEAN
+=============================== */
+
+.despesa-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.despesa-row input,
+.despesa-row select {
+    padding: 9px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-sm);
+    background: var(--cor-surface);
+    font-size: 13px;
+    color: var(--cor-texto);
+    outline: none;
+    transition: var(--transicao);
+}
+
+.despesa-row input:focus,
+.despesa-row select:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.despesa-row input:nth-child(2) {
+    flex: 1;
+    min-width: 80px;
+}
+
+.despesa-row select {
+    flex: 1;
+    min-width: 100px;
+}
+
+.despesa-row > .campo-compra-extra {
+    flex: 3;
+}
+
+.despesa-row > .campo-compra-extra input {
+    width: 100%;
+}
+
+.despesa-row #compraExtraQtd {
+    flex: 0 0 60px;
+    min-width: 0;
+    max-width: 60px;
+    text-align: center;
+    padding: 9px 6px;
+}
+
+#finAdicionarDespesa,
+#compraExtraAdicionar {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: none;
+    border-radius: var(--raio-sm);
+    background: var(--cor-sucesso);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transicao);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#finAdicionarDespesa:hover,
+#compraExtraAdicionar:hover {
+    background: var(--cor-sucesso-hover);
+}
+
+#finAdicionarDespesa:active,
+#compraExtraAdicionar:active {
+    transform: scale(0.95);
+}
+
+/* ==============================
+   FORMULÁRIO FINANCEIRO
+=============================== */
+
+.campo-compra-extra {
+    flex: 3;
+    position: relative;
+}
+
+.campo-compra-extra input {
+    width: 100%;
+}
+
+/* ==============================
+   SUBTAGS COMPRAS
+=============================== */
+
+.subtags-compra {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.subtag {
+    padding: 5px 10px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 20px;
+    background: var(--cor-surface);
+    font-size: 11px;
+    color: var(--cor-texto);
+    cursor: pointer;
+    transition: var(--transicao);
+    white-space: nowrap;
+}
+
+.subtag:hover {
+    background: var(--cor-primaria);
+    color: #fff;
+    border-color: var(--cor-primaria);
+}
+
+.subtag:active {
+    transform: scale(0.95);
+}
+
+.subtag.subtag-ativo {
+    background: var(--cor-primaria);
+    color: #fff;
+    border-color: var(--cor-primaria);
+}

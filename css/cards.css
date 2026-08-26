@@ -1,0 +1,442 @@
+/* ==============================
+   CARDS DE RESUMO
+=============================== */
+
+.resumo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.card-resumo {
+    background: var(--cor-surface);
+    padding: 18px 20px;
+    border-radius: var(--raio);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid var(--cor-borda);
+    transition: var(--transicao);
+}
+
+.card-resumo:hover {
+    box-shadow: var(--sombra-md);
+}
+
+.card-resumo > span {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.card-resumo:nth-child(1) > span { background: #dbeafe; }
+.card-resumo:nth-child(2) > span { background: #fef3c7; }
+.card-resumo:nth-child(3) > span { background: #d1fae5; }
+
+.card-resumo h3 {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--cor-texto-sec);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.card-resumo strong {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--cor-texto);
+    line-height: 1.2;
+}
+
+/* ==============================
+   PRODUTOS / ESTOQUE
+=============================== */
+
+.produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+}
+
+.produto {
+    background: var(--cor-surface);
+    padding: 14px 16px;
+    border-radius: var(--raio);
+    border: 1px solid var(--cor-borda);
+    border-left: 3px solid var(--cor-texto-terc);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: var(--transicao);
+}
+
+.produto:hover {
+    box-shadow: var(--sombra-md);
+}
+
+.produto[data-categoria="Alimentos"] { border-left-color: var(--cat-alimentos); }
+.produto[data-categoria="Limpeza"]   { border-left-color: var(--cat-limpeza); }
+.produto[data-categoria="Higiene"]   { border-left-color: var(--cat-higiene); }
+.produto[data-categoria="Bebidas"]   { border-left-color: var(--cat-bebidas); }
+.produto[data-categoria="Outros"]    { border-left-color: var(--cat-outros); }
+
+.produto h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.produto p {
+    font-size: 12px;
+    color: var(--cor-texto-sec);
+}
+
+.produto .quantidade-produto {
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+/* ==============================
+   BOTÕES DOS PRODUTOS
+=============================== */
+
+.produto button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: var(--raio-sm);
+    cursor: pointer;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: var(--transicao);
+}
+
+.produto button:hover {
+    opacity: 0.9;
+}
+
+.editar {
+    background: var(--cor-editar);
+    color: #fff;
+}
+
+.excluir {
+    background: var(--cor-erro);
+    color: #fff;
+}
+
+/* ==============================
+   ESTOQUE VAZIO / MENSAGEM
+=============================== */
+
+.estoque-vazio,
+.lista-compras-vazia {
+    grid-column: 1 / -1;
+    background: var(--cor-surface);
+    padding: 40px 24px;
+    border-radius: var(--raio);
+    text-align: center;
+    border: 1px dashed var(--cor-borda);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.estoque-vazio .icone-estoque-vazia,
+.icone-lista-vazia {
+    font-size: 32px;
+    margin-bottom: 10px;
+    opacity: 0.6;
+}
+
+.estoque-vazio h3,
+.lista-compras-vazia h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.estoque-vazio p,
+.lista-compras-vazia p {
+    margin-top: 6px;
+    color: var(--cor-texto-terc);
+    font-size: 13px;
+}
+
+/* ==============================
+   LISTA DE COMPRAS
+=============================== */
+
+#listaCompras,
+#listaComprasPagina,
+#listaComprasExtras {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+}
+
+#listaComprasExtras:empty {
+    display: none;
+}
+
+.compra {
+    background: var(--cor-surface);
+    padding: 16px;
+    border-radius: var(--raio);
+    border: 1px solid var(--cor-borda);
+    border-left: 3px solid var(--cor-aviso);
+    transition: var(--transicao);
+}
+
+.compra:hover {
+    box-shadow: var(--sombra-md);
+}
+
+.compra-topo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.icone-compra {
+    font-size: 20px;
+}
+
+.compra-topo h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.informacoes-compra {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.info-compra {
+    background: #f8f9fb;
+    padding: 8px 4px;
+    border-radius: var(--raio-sm);
+    text-align: center;
+}
+
+.info-compra span {
+    display: block;
+    font-size: 10px;
+    color: var(--cor-texto-terc);
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.info-compra strong {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--cor-texto);
+}
+
+.info-compra.falta {
+    background: var(--cor-aviso-bg);
+}
+
+.info-compra.falta strong {
+    color: var(--cor-aviso-text);
+}
+
+.compra .comprei {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: var(--raio-sm);
+    background: var(--cor-sucesso);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.compra .comprei:hover {
+    background: var(--cor-sucesso-hover);
+}
+
+.compra .comprei:only-child {
+    width: 100%;
+}
+
+.compra-extra-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+.compra-extra {
+    padding: 10px 12px;
+    border-left-color: var(--cor-primaria);
+}
+
+.compra-extra .compra-topo {
+    margin-bottom: 4px;
+}
+
+.compra-extra .informacoes-compra {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.compra-extra .informacoes-compra .info-compra {
+    padding: 4px 8px;
+    background: var(--cor-aviso-bg);
+}
+
+.compra-extra .informacoes-compra .info-compra span {
+    font-size: 9px;
+}
+
+.compra-extra .informacoes-compra .info-compra strong {
+    font-size: 13px;
+}
+
+.compra-botoes {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.compra-botoes .comprei {
+    flex: 1;
+    padding: 6px;
+    font-size: 12px;
+}
+
+.compra-botoes .compra-excluir {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    font-size: 11px;
+}
+
+.compra-excluir {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: var(--raio-sm);
+    background: var(--cor-erro);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transicao);
+    flex-shrink: 0;
+}
+
+.compra-excluir:hover {
+    background: var(--cor-erro-hover);
+}
+
+/* ==============================
+   HISTÓRICO DE DESPESAS
+=============================== */
+
+.despesa-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--cor-surface);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-sm);
+    transition: var(--transicao);
+}
+
+.despesa-item:hover {
+    box-shadow: var(--sombra-sm);
+}
+
+.despesa-icone {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.despesa-nome {
+    flex: 2;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cor-texto);
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.despesa-valor {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cor-erro);
+    text-align: right;
+    white-space: nowrap;
+}
+
+.despesa-cat {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+.cat-alimentos { background: #d1fae5; color: #166534; }
+.cat-limpeza   { background: #f3e8ff; color: #7e22ce; }
+.cat-higiene   { background: #ffe4e6; color: #be123c; }
+.cat-bebidas   { background: #dbeafe; color: #1d4ed8; }
+.cat-outros    { background: #f3f4f6; color: #4b5563; }
+
+.cat-alimentação { background: #d1fae5; color: #166534; }
+.cat-lazer       { background: #dbeafe; color: #1d4ed8; }
+.cat-transporte  { background: #fef3c7; color: #92400e; }
+.cat-saúde       { background: #ffe4e6; color: #be123c; }
+.cat-contas      { background: #f3e8ff; color: #7e22ce; }
+.cat-educação    { background: #ccfbf1; color: #0f766e; }
+.cat-vestuário   { background: #fce7f3; color: #be185d; }
+
+.despesa-data {
+    font-size: 12px;
+    color: var(--cor-texto-terc);
+    white-space: nowrap;
+}
+
+.despesa-excluir {
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--cor-texto-terc);
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--transicao);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.despesa-excluir:hover {
+    background: #fee2e2;
+    color: var(--cor-erro);
+}

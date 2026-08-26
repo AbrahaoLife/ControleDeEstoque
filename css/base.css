@@ -1,0 +1,457 @@
+/* ==============================
+   VARIÁVEIS / DESIGN TOKENS
+=============================== */
+
+:root {
+    --cor-fundo: #f0f2f5;
+    --cor-surface: #ffffff;
+    --cor-borda: #e4e7ec;
+    --cor-texto: #1a1d23;
+    --cor-texto-sec: #6b7280;
+    --cor-texto-terc: #9ca3af;
+    --cor-primaria: #2563eb;
+    --cor-primaria-hover: #1d4ed8;
+    --cor-sucesso: #16a34a;
+    --cor-sucesso-hover: #15803d;
+    --cor-aviso: #f59e0b;
+    --cor-aviso-bg: #fef3c7;
+    --cor-aviso-text: #92400e;
+    --cor-erro: #dc2626;
+    --cor-erro-hover: #b91c1c;
+    --cor-editar: #2563eb;
+    --cor-editar-hover: #1d4ed8;
+
+    --cat-alimentos: #16a34a;
+    --cat-limpeza: #9333ea;
+    --cat-higiene: #e11d48;
+    --cat-bebidas: #2563eb;
+    --cat-outros: #6b7280;
+
+    --sidebar-largura: 240px;
+    --sidebar-largura-mobile: 0px;
+    --navbar-altura: 56px;
+
+    --raio: 10px;
+    --raio-sm: 7px;
+    --sombra-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --sombra-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --sombra-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --transicao: 0.2s ease;
+}
+
+/* ==============================
+   MODO ESCURO
+=============================== */
+
+body.escuro {
+    --cor-fundo: #0f172a;
+    --cor-surface: #1e293b;
+    --cor-borda: #334155;
+    --cor-texto: #f1f5f9;
+    --cor-texto-sec: #94a3b8;
+    --cor-texto-terc: #64748b;
+
+    --sombra-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --sombra-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --sombra-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+body.escuro .sidebar {
+    background: #020617;
+}
+
+body.escuro .navbar {
+    background: var(--cor-surface);
+    border-bottom-color: var(--cor-borda);
+}
+
+body.escuro .card-resumo:nth-child(1) > span { background: #1e3a5f; }
+body.escuro .card-resumo:nth-child(2) > span { background: #422006; }
+body.escuro .card-resumo:nth-child(3) > span { background: #14532d; }
+
+body.escuro .produto button:hover,
+body.escuro .compra .comprei:hover {
+    opacity: 0.85;
+}
+
+body.escuro .modal {
+    background: var(--cor-surface);
+    border: 1px solid var(--cor-borda);
+}
+
+body.escuro .modal-campo input {
+    color: #f1f5f9;
+    background: #0f172a;
+    -webkit-text-fill-color: #f1f5f9;
+    border-color: var(--cor-borda);
+}
+
+body.escuro .Categorias button {
+    background: var(--cor-surface);
+    border-color: var(--cor-borda);
+    color: var(--cor-texto-sec);
+}
+
+body.escuro .Categorias button:hover,
+body.escuro .Categorias button.ativo {
+    background: var(--cor-texto);
+    border-color: var(--cor-texto);
+    color: var(--cor-fundo);
+}
+
+body.escuro .info-compra {
+    background: #1a2332;
+}
+
+body.escuro .dash-barra-trilha {
+    background: #1a2332;
+}
+
+body.escuro .dash-atividade-item {
+    border-bottom-color: #1a2332;
+}
+
+body.escuro .dash-mes-item {
+    border-bottom-color: #1a2332;
+}
+
+body.escuro .dash-mes-dentro {
+    background: #14532d;
+    color: #86efac;
+}
+
+body.escuro .dash-mes-acima {
+    background: #450a0a;
+    color: #fca5a5;
+}
+
+body.escuro .dash-chart-valor {
+    color: var(--cor-texto-terc);
+}
+
+body.escuro .dash-chart-label {
+    color: var(--cor-texto-terc);
+}
+
+body.escuro .dash-chart-legenda span {
+    color: var(--cor-texto-terc);
+}
+
+body.escuro .dash-fin-divider {
+    background: var(--cor-borda);
+}
+
+body.escuro .notificacao {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+body.escuro .subtag {
+    background: var(--cor-surface);
+    border-color: var(--cor-borda);
+    color: var(--cor-texto-sec);
+}
+
+body.escuro .subtag:hover {
+    background: var(--cor-primaria);
+    color: #fff;
+}
+
+body.escuro .sugestoes-produtos,
+body.escuro .sugestoes {
+    background: #1a2332;
+    border-color: var(--cor-borda);
+}
+
+body.escuro .sugestao-produto:hover {
+    background: #243447;
+}
+
+body.escuro .navbar-menu:hover {
+    background: #1e293b;
+}
+
+body.escuro .modal-btn-cancelar:hover {
+    background: #334155;
+    border-color: #475569;
+}
+
+body.escuro .cat-alimentos { background: #14532d; color: #86efac; }
+body.escuro .cat-limpeza   { background: #3b0764; color: #d8b4fe; }
+body.escuro .cat-higiene   { background: #4c0519; color: #fda4af; }
+body.escuro .cat-bebidas   { background: #1e3a5f; color: #93c5fd; }
+body.escuro .cat-outros    { background: #1e293b; color: #94a3b8; }
+
+body.escuro .cat-alimentação { background: #14532d; color: #86efac; }
+body.escuro .cat-lazer       { background: #1e3a5f; color: #93c5fd; }
+body.escuro .cat-transporte  { background: #422006; color: #fcd34d; }
+body.escuro .cat-saúde       { background: #4c0519; color: #fda4af; }
+body.escuro .cat-contas      { background: #3b0764; color: #d8b4fe; }
+body.escuro .cat-educação    { background: #134e4a; color: #5eead4; }
+body.escuro .cat-vestuário   { background: #500724; color: #f9a8d4; }
+
+body.escuro .despesa-excluir:hover {
+    background: #450a0a;
+    color: #fca5a5;
+}
+
+/* ==============================
+   RESET / GERAL
+=============================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ==============================
+   SIDEBAR
+=============================== */
+
+.sidebar {
+    width: var(--sidebar-largura);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    background: #111827;
+    color: #d1d5db;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #1f2937;
+}
+
+.sidebar-logo-icone {
+    font-size: 22px;
+}
+
+.sidebar-logo-texto {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transicao);
+    width: 100%;
+    text-align: left;
+}
+
+.sidebar-link:hover {
+    background: #1f2937;
+    color: #e5e7eb;
+}
+
+.sidebar-link.ativo {
+    background: #2563eb;
+    color: #fff;
+}
+
+.sidebar-link-icone {
+    font-size: 17px;
+    width: 22px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.sidebar-link-texto {
+    flex: 1;
+}
+
+.sidebar-footer {
+    padding: 14px 20px;
+    border-top: 1px solid #1f2937;
+}
+
+.sidebar-versao {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+/* ==============================
+   SIDEBAR - BOTÕES FOOTER
+=============================== */
+
+.sidebar-botoes {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.sidebar-btn {
+    flex: 1;
+    padding: 7px 0;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    background: transparent;
+    color: #9ca3af;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.sidebar-btn:hover {
+    background: #1f2937;
+    color: #e5e7eb;
+    border-color: #4b5563;
+}
+
+/* ==============================
+   ÁREA PRINCIPAL
+=============================== */
+
+.principal {
+    flex: 1;
+    margin-left: var(--sidebar-largura);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==============================
+   NAVBAR
+=============================== */
+
+.navbar {
+    height: var(--navbar-altura);
+    background: var(--cor-surface);
+    border-bottom: 1px solid var(--cor-borda);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-menu {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--cor-texto);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.navbar-menu:hover {
+    background: #f3f4f6;
+}
+
+.navbar-titulo {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.navbar-info {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--cor-texto-sec);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.navbar-tema {
+    background: none;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.navbar-tema:hover {
+    background: var(--cor-fundo);
+}
+
+/* ==============================
+   CONTEÚDO
+=============================== */
+
+.conteudo {
+    padding: 24px 28px;
+    flex: 1;
+}
+
+/* ==============================
+   SISTEMA DE PÁGINAS
+=============================== */
+
+.pagina {
+    display: none;
+}
+
+.pagina.ativo {
+    display: block;
+    animation: paginaEntrar 0.3s ease;
+}
+
+@keyframes paginaEntrar {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==============================
+   SEÇÕES
+=============================== */
+
+.secao {
+    margin-bottom: 24px;
+}
+
+.secao-titulo {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--cor-texto-sec);
+    margin-bottom: 14px;
+}

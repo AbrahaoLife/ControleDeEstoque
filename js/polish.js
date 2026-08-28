@@ -101,6 +101,12 @@
                                 ? despesas
                                 : [],
 
+                        comprasExtras:
+                            typeof comprasExtras !==
+                                "undefined"
+                                ? comprasExtras
+                                : [],
+
                         saldoInicial:
                             typeof saldoInicial !==
                                 "undefined"
@@ -316,6 +322,17 @@
                                     "despesas",
                                     JSON.stringify(
                                         dados.despesas
+                                    )
+                                );
+                            }
+
+                            if (
+                                dados.comprasExtras
+                            ) {
+                                localStorage.setItem(
+                                    "comprasExtras",
+                                    JSON.stringify(
+                                        dados.comprasExtras
                                     )
                                 );
                             }

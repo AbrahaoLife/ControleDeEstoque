@@ -354,22 +354,69 @@
             <div class="informacoes-compra">
                 <div class="info-compra">
                     <span>Estoque atual</span>
-                    <strong>${qtdAtual}</strong>
+                    <strong class="info-estoque-atual">${qtdAtual}</strong>
                 </div>
                 <div class="info-compra">
                     <span>Estoque mínimo</span>
-                    <strong>${estoqueMin}</strong>
+                    <strong class="info-estoque-minimo">${estoqueMin}</strong>
                 </div>
                 <div class="info-compra falta">
                     <span>Comprar</span>
-                    <strong>${faltando}</strong>
+                    <strong class="info-comprar">${faltando}</strong>
                 </div>
+            </div>
+
+            <div class="compra-controle">
+                <span class="compra-controle-label">Estoque</span>
+                <div class="controle-quantidade"></div>
             </div>
 
             <button class="comprei">
                 ✓ Comprei
             </button>
         `;
+
+        const areaControle =
+            card.querySelector(
+                ".controle-quantidade"
+            );
+
+        const controle =
+            criarControleQuantidade(
+                qtdAtual,
+                function (novoValor) {
+
+                    if (
+                        Number(produto.quantidade) ===
+                        novoValor
+                    ) {
+                        return;
+                    }
+
+                    mudarQuantidadeProduto(
+                        produto,
+                        novoValor,
+                        false
+                    );
+
+                    sincronizarCardCompra(
+                        card,
+                        produto
+                    );
+
+                    if (
+                        Number(produto.quantidade) >=
+                        Number(produto.estoqueMinimo)
+                    ) {
+                        atualizarPaginaCompras();
+                    }
+
+                }
+            );
+
+        areaControle.appendChild(
+            controle.controle
+        );
 
 
         const botaoComprei =
@@ -539,6 +586,8 @@
             }
 
             atualizarResumoCompras();
+
+            atualizarVisibilidadeSubtitulosCompras();
 
         };
 

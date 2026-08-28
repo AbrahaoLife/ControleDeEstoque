@@ -48,37 +48,73 @@ function criarCardCompra(
 
         <div class="informacoes-compra">
             <div class="info-compra">
-                <span>
-                    Estoque atual
-                </span>
-                <strong>
+                <span>Estoque atual</span>
+                <strong class="info-estoque-atual">
                     ${quantidadeAtual}
                 </strong>
             </div>
 
             <div class="info-compra">
-                <span>
-                    Estoque mínimo
-                </span>
+                <span>Estoque mínimo</span>
                 <strong>
                     ${estoqueMinimo}
                 </strong>
             </div>
 
             <div class="info-compra falta">
-                <span>
-                    Comprar
-                </span>
-                <strong>
+                <span>Comprar</span>
+                <strong class="info-comprar">
                     ${quantidadeFaltando}
                 </strong>
             </div>
+        </div>
+
+        <div class="compra-controle">
+            <span class="compra-controle-label">
+                Estoque
+            </span>
+            <div class="controle-quantidade"></div>
         </div>
 
         <button class="comprei">
             ✓ Comprei
         </button>
     `;
+
+    const areaControle =
+        card.querySelector(
+            ".controle-quantidade"
+        );
+
+    const controle =
+        criarControleQuantidade(
+            quantidadeAtual,
+            function (novoValor) {
+
+                if (
+                    Number(produto.quantidade) ===
+                    novoValor
+                ) {
+                    return;
+                }
+
+                mudarQuantidadeProduto(
+                    produto,
+                    novoValor,
+                    false
+                );
+
+                sincronizarCardCompra(
+                    card,
+                    produto
+                );
+
+            }
+        );
+
+    areaControle.appendChild(
+        controle.controle
+    );
 
 
     const botaoComprei =
@@ -325,31 +361,37 @@ function criarCardCompra(
                 ...produtosCadastrados
             ];
 
+        const vistos =
+            {};
+
         const listaUnica =
-            [
-                ...new Set(
-                    lista
-                )
-            ];
+            lista.filter(
+                function (nome) {
+
+                    const chave =
+                        normalizarBusca(nome);
+
+                    if (vistos[chave]) {
+                        return false;
+                    }
+
+                    vistos[chave] =
+                        true;
+
+                    return true;
+
+                }
+            );
+
+        const alvo =
+            normalizarBusca(texto);
 
         const resultados =
             listaUnica.filter(
                 function (nome) {
-                    return nome
-                        .toLowerCase()
-                        .normalize("NFD")
-                        .replace(
-                            /[\u0300-\u036f]/g,
-                            ""
-                        )
-                        .includes(
-                            texto
-                                .normalize("NFD")
-                                .replace(
-                                    /[\u0300-\u036f]/g,
-                                    ""
-                                )
-                        );
+                    return normalizarBusca(
+                        nome
+                    ).includes(alvo);
                 }
             );
 
@@ -564,6 +606,52 @@ function criarCardCompra(
                     campoQtd.value
                 ) || 1;
 
+            const nomeNormalizado =
+                normalizarNome(nome);
+
+            const itemExistente =
+                comprasExtras.find(
+                    function (i) {
+                        return (
+                            normalizarNome(i.nome) ===
+                            nomeNormalizado
+                        );
+                    }
+                );
+
+            if (itemExistente) {
+
+                itemExistente.quantidade =
+                    Number(itemExistente.quantidade || 1) +
+                    quantidade;
+
+                localStorage.setItem(
+                    "comprasExtras",
+                    JSON.stringify(
+                        comprasExtras
+                    )
+                );
+
+                campoNome.value = "";
+                campoQtd.value = "1";
+
+                renderizarComprasExtras();
+
+                destacarCard(
+                    document.querySelector(
+                        `#listaComprasExtras .compra-extra` +
+                        `[data-id="${itemExistente.id}"]`
+                    )
+                );
+
+                mostrarNotificacao(
+                    `"${nome}" já estava na lista! Quantidade aumentada para ${itemExistente.quantidade}.`,
+                    "atualizado"
+                );
+
+                return;
+            }
+
             const item = {
                 id: Date.now(),
                 nome: nome,
@@ -613,6 +701,7 @@ function criarCardCompra(
             container.innerHTML = "";
 
             if (comprasExtras.length === 0) {
+                atualizarVisibilidadeSubtitulosCompras();
                 return;
             }
 
@@ -631,6 +720,9 @@ function criarCardCompra(
 
                 card.dataset.categoria =
                     item.categoria;
+
+                card.dataset.id =
+                    item.id;
 
                 const catCores =
                     {
@@ -651,11 +743,9 @@ function criarCardCompra(
                         <h3>${escaparHTML(item.nome)}</h3>
                         <span class="compra-extra-badge" style="background: ${cor}">${escaparHTML(item.categoria)}</span>
                     </div>
-                    <div class="informacoes-compra">
-                        <div class="info-compra falta">
-                            <span>Comprar</span>
-                            <strong>${item.quantidade || 1}</strong>
-                        </div>
+                    <div class="compra-controle compra-extra-controle">
+                        <span class="compra-controle-label">Comprar</span>
+                        <div class="controle-quantidade"></div>
                     </div>
                     <div class="compra-botoes">
                         <button class="comprei">
@@ -666,6 +756,38 @@ function criarCardCompra(
                         </button>
                     </div>
                 `;
+
+
+                const areaControle =
+                    card.querySelector(
+                        ".controle-quantidade"
+                    );
+
+                const controle =
+                    criarControleQuantidade(
+                        item.quantidade || 1,
+                        function (novoValor) {
+
+                            if (novoValor < 1) {
+                                novoValor = 1;
+                            }
+
+                            item.quantidade =
+                                novoValor;
+
+                            localStorage.setItem(
+                                "comprasExtras",
+                                JSON.stringify(
+                                    comprasExtras
+                                )
+                            );
+
+                        }
+                    );
+
+                areaControle.appendChild(
+                    controle.controle
+                );
 
 
                 const botaoComprei =
@@ -774,6 +896,8 @@ function criarCardCompra(
                 );
 
             }
+
+            atualizarVisibilidadeSubtitulosCompras();
 
         };
 

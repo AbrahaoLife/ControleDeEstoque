@@ -9,15 +9,19 @@ Sistema web completo para gerenciamento de estoque doméstico, lista de compras,
 ### Estoque
 - Cadastro, edição e exclusão de produtos
 - Controle de quantidade e estoque mínimo
+- Botões +/− e edição direta da quantidade nos cards
+- Prevenção de produtos duplicados (nomes com espaços/caixa diferentes são iguais)
 - Categorias automáticas (Alimentos, Limpeza, Higiene, Bebidas, Outros)
 - Busca e filtros por categoria
 - Alertas de estoque baixo
 
 ### Lista de Compras
 - Itens gerados automaticamente a partir do estoque baixo
-- Adição manual de itens com quantidade
+- Adição manual de itens com quantidade (botões +/− nos cards)
+- Merge automático de itens repetidos (aumenta a quantidade)
+- Layout em grade responsiva
 - Subtags de produtos mais comprados
-- Autocomplete com categorias
+- Autocomplete com categorias e sugestões ampliadas (frutas, verduras e legumes)
 
 ### Financeiro
 - Definição de saldo inicial mensal

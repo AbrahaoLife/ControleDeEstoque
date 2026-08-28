@@ -40,6 +40,30 @@
     }
 }
 
+/* ---- ATÉ 640px (celulares landscape / tablet pequeno) ---- */
+
+@media (max-width: 640px) {
+
+    #listaCompras,
+    #listaComprasPagina,
+    #listaComprasExtras {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .formulario {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-produto {
+        grid-column: span 1;
+    }
+
+    .despesa-row {
+        flex-wrap: wrap;
+    }
+}
+
 /* ---- ATÉ 500px (celulares) ---- */
 
 @media (max-width: 500px) {
@@ -274,6 +298,25 @@
         margin-top: 6px;
     }
 
+    /* CONTROLE DE QUANTIDADE */
+
+    .qtd-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
+    }
+
+    .qtd-numero {
+        min-width: 32px;
+        height: 28px;
+        font-size: 13px;
+        padding: 0 4px;
+    }
+
+    .controle-quantidade {
+        gap: 4px;
+    }
+
     /* COMPRAS */
 
     #listaCompras,
@@ -357,6 +400,44 @@
         width: 28px;
         height: 28px;
         font-size: 10px;
+    }
+
+    /* NOVOS CONTROLES / SUBTITULOS */
+
+    .lista-compras-sub {
+        font-size: 10px;
+        margin: 12px 0 5px;
+        letter-spacing: 0.3px;
+    }
+
+    .lista-compras-sub.adicionados {
+        margin-top: 18px;
+        padding-top: 12px;
+    }
+
+    .produto-quantidade {
+        margin-top: 8px;
+        padding-top: 8px;
+        gap: 6px;
+    }
+
+    .quantidade-label,
+    .compra-controle-label {
+        font-size: 10px;
+    }
+
+    .compra-controle,
+    .compra-extra-controle {
+        margin-bottom: 6px;
+    }
+
+    .produto-botoes {
+        gap: 6px;
+        margin-top: 6px;
+    }
+
+    .produto-botoes button {
+        margin-top: 0;
     }
 
     /* HISTÓRICO DESPESAS */

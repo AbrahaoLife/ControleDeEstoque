@@ -34,6 +34,351 @@ function escaparHTML(
     return div.innerHTML;
 }
 
+
+// ==============================
+// NORMALIZAÇÃO DE NOMES
+// ==============================
+
+function normalizarNome(
+    nome
+) {
+    return String(nome)
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLowerCase();
+}
+
+
+function normalizarBusca(
+    texto
+) {
+    return normalizarNome(texto)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+}
+
+
+// ==============================
+// PRODUTO DUPLICADO
+// ==============================
+
+function encontrarProdutoDuplicado(
+    nome,
+    ignorarId
+) {
+    const alvo =
+        normalizarNome(nome);
+
+    for (
+        const produto
+        of produtos
+    ) {
+        if (
+            ignorarId !== undefined &&
+            produto.id === ignorarId
+        ) {
+            continue;
+        }
+
+        if (
+            normalizarNome(produto.nome) ===
+            alvo
+        ) {
+            return produto;
+        }
+    }
+
+    return null;
+}
+
+
+// ==============================
+// CONTROLE DE QUANTIDADE (+/−)
+// ==============================
+
+function criarControleQuantidade(
+    valorInicial,
+    aoAlterar
+) {
+
+    const controle =
+        document.createElement("div");
+
+    controle.classList.add(
+        "controle-quantidade"
+    );
+
+    const botaoMenos =
+        document.createElement("button");
+
+    botaoMenos.type =
+        "button";
+
+    botaoMenos.classList.add(
+        "qtd-btn",
+        "qtd-menos"
+    );
+
+    botaoMenos.textContent =
+        "−";
+
+    botaoMenos.setAttribute(
+        "aria-label",
+        "Diminuir quantidade"
+    );
+
+    const campoSaida =
+        document.createElement("span");
+
+    campoSaida.classList.add(
+        "qtd-numero"
+    );
+
+    campoSaida.setAttribute(
+        "aria-live",
+        "polite"
+    );
+
+    const botaoMais =
+        document.createElement("button");
+
+    botaoMais.type =
+        "button";
+
+    botaoMais.classList.add(
+        "qtd-btn",
+        "qtd-mais"
+    );
+
+    botaoMais.textContent =
+        "+";
+
+    botaoMais.setAttribute(
+        "aria-label",
+        "Aumentar quantidade"
+    );
+
+    let valorAtual =
+        Math.max(
+            0,
+            Math.floor(
+                Number(valorInicial) || 0
+            )
+        );
+
+    campoSaida.textContent =
+        valorAtual;
+
+
+    function setValor(
+        novoValor
+    ) {
+
+        let v =
+            Math.floor(
+                Number(novoValor) || 0
+            );
+
+        if (v < 0) {
+            v = 0;
+        }
+
+        valorAtual = v;
+
+        campoSaida.textContent = v;
+
+    }
+
+
+    botaoMenos.addEventListener(
+        "click",
+        function () {
+
+            const novo =
+                valorAtual - 1;
+
+            if (novo < 0) {
+                return;
+            }
+
+            setValor(novo);
+
+            aoAlterar(valorAtual);
+
+        }
+    );
+
+
+    botaoMais.addEventListener(
+        "click",
+        function () {
+
+            setValor(valorAtual + 1);
+
+            aoAlterar(valorAtual);
+
+        }
+    );
+
+
+    controle.appendChild(
+        botaoMenos
+    );
+
+    controle.appendChild(
+        campoSaida
+    );
+
+    controle.appendChild(
+        botaoMais
+    );
+
+
+    return {
+        controle: controle,
+        setValor: setValor
+    };
+
+}
+
+
+// ==============================
+// DESTACAR CARD EXISTENTE
+// ==============================
+
+function destacarCard(
+    card
+) {
+
+    if (!card) {
+        return;
+    }
+
+    card.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+    card.classList.remove(
+        "card-destaque"
+    );
+
+    void card.offsetWidth;
+
+    card.classList.add(
+        "card-destaque"
+    );
+
+}
+
+
+// ==============================
+// SUBTITULOS LISTA COMPRAS
+// ==============================
+
+function atualizarVisibilidadeSubtitulosCompras() {
+
+    const listaPagina =
+        document.getElementById(
+            "listaComprasPagina"
+        );
+
+    const listaExtras =
+        document.getElementById(
+            "listaComprasExtras"
+        );
+
+    const subs =
+        document.querySelectorAll(
+            ".lista-compras-sub"
+        );
+
+    const paginaVazia =
+        !listaPagina ||
+        listaPagina.querySelector(
+            ".compra"
+        ) === null;
+
+    const extrasVazios =
+        !listaExtras ||
+        listaExtras.children.length === 0;
+
+    for (
+        const sub
+        of subs
+    ) {
+        const ehEstoque =
+            sub.classList.contains(
+                "adicionados"
+            ) === false;
+
+        const deveMostrar =
+            ehEstoque
+                ? !paginaVazia
+                : !extrasVazios;
+
+        sub.style.display =
+            deveMostrar
+                ? ""
+                : "none";
+    }
+
+}
+
+
+// ==============================
+// SINCRONIZAR CARD COMPRA (ESTOQUE)
+// ==============================
+
+function sincronizarCardCompra(
+    card,
+    produto
+) {
+
+    const elAtual =
+        card.querySelector(
+            ".info-estoque-atual"
+        );
+
+    const elComprar =
+        card.querySelector(
+            ".info-comprar"
+        );
+
+    const campoQtd =
+        card.querySelector(
+            ".qtd-numero"
+        );
+
+    const atual =
+        Number(produto.quantidade);
+
+    const minimo =
+        Number(produto.estoqueMinimo);
+
+    const faltando =
+        Math.max(0, minimo - atual);
+
+    if (elAtual) {
+        elAtual.textContent =
+            atual;
+    }
+
+    if (elComprar) {
+        elComprar.textContent =
+            faltando;
+    }
+
+    if (
+        campoQtd &&
+        Number(campoQtd.textContent) !== atual
+    ) {
+        campoQtd.textContent =
+            atual;
+    }
+
+}
+
 const botao =
     document.getElementById("adicionar");
 
@@ -121,14 +466,68 @@ const sugestoes = [
     "Molho de tomate",
     "Milho",
     "Ervilha",
+
+    "Maçã",
+    "Banana",
+    "Laranja",
+    "Limão",
+    "Mamão",
+    "Melancia",
+    "Melão",
+    "Uva",
+    "Morango",
+    "Abacaxi",
+    "Manga",
+    "Goiaba",
+    "Pera",
+    "Pêssego",
+    "Kiwi",
+    "Amora",
+    "Ameixa",
+    "Tangerina",
+    "Mexerica",
+    "Maracujá",
+    "Coco",
+    "Caju",
+
     "Batata",
+    "Batata doce",
+    "Batata inglesa",
+    "Cenoura",
     "Cebola",
     "Tomate",
     "Alho",
-    "Banana",
-    "Maçã",
-    "Laranja",
-    "Limão",
+    "Alface",
+    "Couve",
+    "Espinafre",
+    "Brócolis",
+    "Couve-flor",
+    "Repolho",
+    "Abobrinha",
+    "Abóbora",
+    "Berinjela",
+    "Pimentão",
+    "Pepino",
+    "Salsinha",
+    "Cebolinha",
+    "Coentro",
+    "Mandioca",
+    "Inhame",
+    "Beterraba",
+    "Chuchu",
+    "Vagem",
+
+    "Feijão carioca",
+    "Feijão preto",
+    "Lentilha",
+    "Grão de bico",
+    "Ervilha",
+    "Milho verde",
+    "Soja",
+    "Amendoim",
+    "Castanha",
+    "Pipoca",
+
     "Refrigerante",
     "Coca-Cola",
     "Pepsi",
@@ -169,7 +568,22 @@ const categoriaAutomatica =
                 "mandioca", "cereal", "iogurte", "requeijão",
                 "creme", "sopa", "molho", "ketchup",
                 "maionese", "mostarda", "pimenta", "tempero",
-                "ervas", "chá", "chá"
+                "ervas", "chá", "chá",
+                "cenoura", "alface", "couve", "espinafre",
+                "brócolis", "couve-flor", "repolho",
+                "abobrinha", "abóbora", "berinjela",
+                "pimentão", "pepino", "salsinha", "cebolinha",
+                "coentro", "inhame", "beterraba", "chuchu",
+                "vagem", "lentilha", "grão de bico",
+                "milho verde", "mamão", "melancia", "melão",
+                "uva", "morango", "abacaxi", "manga",
+                "goiaba", "pera", "pêssego", "kiwi",
+                "amora", "ameixa", "tangerina", "maracujá",
+                "coco", "caju", "soja", "amendoim",
+                "castanha", "pipoca", "verdura", "fruta",
+                "legume", "folhas", "acelga", "rúcula",
+                "scallion", "cebolinha", "salsão",
+                "batata doce"
             ],
 
         Bebidas:

@@ -41,6 +41,62 @@ function atualizarResumo() {
 
 
 // ==============================
+// MUDAR QUANTIDADE DO PRODUTO
+// ==============================
+
+function mudarQuantidadeProduto(
+    produto,
+    novaQuantidade,
+    rerenderListaCompras
+) {
+
+    if (
+        !Number.isFinite(novaQuantidade)
+    ) {
+        novaQuantidade = 0;
+    }
+
+    if (novaQuantidade < 0) {
+        novaQuantidade = 0;
+    }
+
+    novaQuantidade =
+        Math.floor(novaQuantidade);
+
+    if (
+        Number(produto.quantidade) ===
+        novaQuantidade
+    ) {
+        return;
+    }
+
+    produto.quantidade =
+        novaQuantidade;
+
+    localStorage.setItem(
+        "produtos",
+        JSON.stringify(
+            produtos
+        )
+    );
+
+    atualizarCardProduto(
+        produto
+    );
+
+    if (rerenderListaCompras !== false) {
+
+        verificarEstoque();
+        verificarEstoqueVazio();
+
+    }
+
+    atualizarResumo();
+
+}
+
+
+// ==============================
 // CRIAR CARD PRODUTO
 // ==============================
 
@@ -65,10 +121,6 @@ function criarCardProduto(
         <h3>
             ${escaparHTML(produtoSalvo.nome)}
         </h3>
-        <p class="quantidade-produto">
-            Quantidade:
-            ${escaparHTML(String(produtoSalvo.quantidade))}
-        </p>
         <p>
             Categoria:
             ${escaparHTML(produtoSalvo.categoria)}
@@ -77,12 +129,20 @@ function criarCardProduto(
             Mínimo:
             ${escaparHTML(String(produtoSalvo.estoqueMinimo))}
         </p>
-        <button class="editar">
-            Editar
-        </button>
-        <button class="excluir">
-            Excluir
-        </button>
+        <div class="produto-quantidade">
+            <span class="quantidade-label">
+                Quantidade
+            </span>
+            <div class="controle-quantidade"></div>
+        </div>
+        <div class="produto-botoes">
+            <button class="editar">
+                Editar
+            </button>
+            <button class="excluir">
+                Excluir
+            </button>
+        </div>
     `;
 
     const botaoEditar =
@@ -94,6 +154,29 @@ function criarCardProduto(
         produto.querySelector(
             ".excluir"
         );
+
+    const areaControle =
+        produto.querySelector(
+            ".controle-quantidade"
+        );
+
+    const controle =
+        criarControleQuantidade(
+            produtoSalvo.quantidade,
+            function (novoValor) {
+
+                mudarQuantidadeProduto(
+                    produtoSalvo,
+                    novoValor,
+                    true
+                );
+
+            }
+        );
+
+    areaControle.appendChild(
+        controle.controle
+    );
 
 
     // ==============================
@@ -208,11 +291,17 @@ function atualizarCardProduto(
 
     const quantidade =
         card.querySelector(
-            ".quantidade-produto"
+            ".qtd-numero"
         );
 
-    quantidade.textContent =
-        `Quantidade: ${produto.quantidade}`;
+    if (
+        quantidade &&
+        Number(quantidade.textContent) !==
+        Number(produto.quantidade)
+    ) {
+        quantidade.textContent =
+            produto.quantidade;
+    }
 }
 
 
@@ -241,24 +330,30 @@ function atualizarCardProdutoCompleto(
 
     const quantidade =
         card.querySelector(
-            ".quantidade-produto"
+            ".qtd-numero"
         );
 
     const categoria =
         card.querySelector(
-            "p:nth-of-type(2)"
+            "p:nth-of-type(1)"
         );
 
     const minimo =
         card.querySelector(
-            "p:nth-of-type(3)"
+            "p:nth-of-type(2)"
         );
 
     nome.textContent =
         produto.nome;
 
-    quantidade.textContent =
-        `Quantidade: ${produto.quantidade}`;
+    if (
+        quantidade &&
+        Number(quantidade.value) !==
+        Number(produto.quantidade)
+    ) {
+        quantidade.value =
+            produto.quantidade;
+    }
 
     categoria.textContent =
         `Categoria: ${produto.categoria}`;
@@ -650,6 +745,40 @@ botao.addEventListener(
             produtoEditando === null
         ) {
 
+            const nomeNormalizado =
+                normalizarNome(nome);
+
+            const produtoNormalizadoEncontrado =
+                produtos.some(
+                    function (item) {
+                        return (
+                            normalizarNome(item.nome) ===
+                            nomeNormalizado
+                        );
+                    }
+                );
+
+            if (produtoNormalizadoEncontrado) {
+
+                const existente =
+                    encontrarProdutoDuplicado(
+                        nome
+                    );
+
+                mostrarNotificacao(
+                    `"${nome}" já existe no estoque! (Quantidade: ${existente.quantidade}, Categoria: ${existente.categoria})`,
+                    "erro"
+                );
+
+                destacarCard(
+                    document.querySelector(
+                        `.produto[data-id="${existente.id}"]`
+                    )
+                );
+
+                return;
+            }
+
             const produtoSalvo = {
 
                 id: Date.now(),
@@ -702,6 +831,28 @@ botao.addEventListener(
                 mostrarNotificacao(
                     "Produto não encontrado!",
                     "erro"
+                );
+
+                return;
+            }
+
+            const outroNome =
+                encontrarProdutoDuplicado(
+                    nome,
+                    produto.id
+                );
+
+            if (outroNome) {
+
+                mostrarNotificacao(
+                    `"${nome}" já existe no estoque! (Quantidade: ${outroNome.quantidade}, Categoria: ${outroNome.categoria})`,
+                    "erro"
+                );
+
+                destacarCard(
+                    document.querySelector(
+                        `.produto[data-id="${outroNome.id}"]`
+                    )
                 );
 
                 return;

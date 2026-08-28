@@ -325,19 +325,37 @@ function mostrarSugestoes() {
             ...produtosCadastrados
         ];
 
+    const vistos =
+        {};
+
     const listaUnica =
-        [
-            ...new Set(
-                lista
-            )
-        ];
+        lista.filter(
+            function (nome) {
+
+                const chave =
+                    normalizarBusca(nome);
+
+                if (vistos[chave]) {
+                    return false;
+                }
+
+                vistos[chave] =
+                    true;
+
+                return true;
+
+            }
+        );
+
+    const alvo =
+        normalizarBusca(texto);
 
     const resultados =
         listaUnica.filter(
             function (produto) {
-                return produto
-                    .toLowerCase()
-                    .includes(texto);
+                return normalizarBusca(
+                    produto
+                ).includes(alvo);
             }
         );
 

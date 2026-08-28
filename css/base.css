@@ -194,6 +194,43 @@ body.escuro .despesa-excluir:hover {
     color: #fca5a5;
 }
 
+body.escuro .qtd-btn {
+    background: var(--cor-surface);
+    border-color: var(--cor-borda);
+    color: var(--cor-texto);
+}
+
+body.escuro .qtd-numero {
+    background: #0f172a;
+    color: #f1f5f9;
+    border-color: var(--cor-borda);
+}
+
+body.escuro .qtd-btn:hover {
+    background: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+    color: #fff;
+}
+
+body.escuro .qtd-menos:hover {
+    background: var(--cor-erro);
+    border-color: var(--cor-erro);
+    color: #fff;
+}
+
+body.escuro .card-destaque {
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.7) !important;
+}
+
+@keyframes cardDestaqueEscuro {
+    0%   { background: #422006; }
+    100% { background: var(--cor-surface); }
+}
+
+body.escuro .card-destaque {
+    animation: cardDestaqueEscuro 1.4s ease;
+}
+
 /* ==============================
    RESET / GERAL
 =============================== */

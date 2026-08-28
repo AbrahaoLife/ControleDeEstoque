@@ -1,5 +1,5 @@
 const CACHE_NAME =
-    "estoque-abrahao-v13";
+    "estoque-abrahao-v14";
 
 const ARQUIVOS =
     [

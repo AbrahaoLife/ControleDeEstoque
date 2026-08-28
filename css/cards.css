@@ -97,9 +97,137 @@
     color: var(--cor-texto-sec);
 }
 
-.produto .quantidade-produto {
+/* ---- Controle de quantidade (produto) ---- */
+
+.produto-quantidade {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--cor-borda);
+}
+
+.quantidade-label {
+    font-size: 12px;
     font-weight: 600;
+    color: var(--cor-texto-sec);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.produto-botoes {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.produto-botoes .editar,
+.produto-botoes .excluir {
+    flex: 1;
+    margin-top: 0;
+}
+
+/* ---- Controle de quantidade (compras) ---- */
+
+.compra-controle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.compra-controle-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cor-texto-sec);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.compra-extra-controle {
+    margin-top: 6px;
+    margin-bottom: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--cor-borda);
+}
+
+/* ---- Controle +/− ---- */
+
+.controle-quantidade {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.qtd-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 50%;
+    background: var(--cor-surface);
     color: var(--cor-texto);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: var(--transicao);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.qtd-btn:hover {
+    background: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+    color: #fff;
+    transform: scale(1.08);
+}
+
+.qtd-btn:active {
+    transform: scale(0.94);
+}
+
+.qtd-menos:hover {
+    background: var(--cor-erro);
+    border-color: var(--cor-erro);
+    color: #fff;
+}
+
+.qtd-numero {
+    min-width: 34px;
+    height: 30px;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-sm);
+    background: var(--cor-surface);
+    color: var(--cor-texto);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: var(--transicao);
+}
+
+/* ---- Destaque de card duplicado ---- */
+
+.card-destaque {
+    animation: cardDestaque 1.4s ease;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.6) !important;
+    border-color: var(--cor-aviso) !important;
+}
+
+@keyframes cardDestaque {
+    0%   { background: var(--cor-aviso-bg); }
+    100% { background: var(--cor-surface); }
 }
 
 /* ==============================
@@ -176,12 +304,38 @@
 #listaComprasPagina,
 #listaComprasExtras {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
 }
 
 #listaComprasExtras:empty {
     display: none;
+}
+
+.lista-compras-sub {
+    grid-column: 1 / -1;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cor-texto-sec);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin: 18px 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lista-compras-sub.adicionados {
+    margin-top: 26px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--cor-borda);
+}
+
+.lista-compras-sub::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--cor-borda);
 }
 
 .compra {

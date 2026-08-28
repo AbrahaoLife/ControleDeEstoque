@@ -90,158 +90,210 @@
             "click",
             function () {
 
-                const dados =
-                    {
-                        produtos:
-                            produtos || [],
-
-                        despesas:
-                            typeof despesas !==
-                                "undefined"
-                                ? despesas
-                                : [],
-
-                        comprasExtras:
-                            typeof comprasExtras !==
-                                "undefined"
-                                ? comprasExtras
-                                : [],
-
-                        saldoInicial:
-                            typeof saldoInicial !==
-                                "undefined"
-                                ? saldoInicial
-                                : 0,
-
-                        mesesLogs:
-                            typeof mesesLogs !==
-                                "undefined"
-                                ? mesesLogs
-                                : [],
-
-                        mesAtualRef:
-                            typeof mesAtualRef !==
-                                "undefined"
-                                ? mesAtualRef
-                                : "",
-
-                        exportadoEm:
-                            new Date().toISOString()
-                    };
-
-                const json =
-                    JSON.stringify(
-                        dados,
-                        null,
-                        2
-                    );
-
-                const nomeArquivo =
-                    "estoque-abrahao-" +
-                    new Date()
-                        .toISOString()
-                        .slice(0, 10) +
-                    ".json";
-
-                const blob =
-                    new Blob(
-                        [json],
-                        {
-                            type:
-                                "application/json"
-                        }
-                    );
-
-                if (
-                    navigator.share &&
-                    navigator.canShare
+                function baixarBackup(
+                    blob,
+                    nomeArquivo
                 ) {
 
-                    const arquivo =
-                        new File(
-                            [blob],
-                            nomeArquivo,
+                    const url =
+                        URL.createObjectURL(
+                            blob
+                        );
+
+                    const link =
+                        document.createElement(
+                            "a"
+                        );
+
+                    link.href =
+                        url;
+
+                    link.download =
+                        nomeArquivo;
+
+                    document.body.appendChild(
+                        link
+                    );
+
+                    link.click();
+
+                    setTimeout(
+                        function () {
+                            document.body.removeChild(
+                                link
+                            );
+
+                            URL.revokeObjectURL(
+                                url
+                            );
+                        },
+                        200
+                    );
+
+                    mostrarNotificacao(
+                        "Dados exportados com sucesso!",
+                        "sucesso"
+                    );
+
+                }
+
+
+                try {
+
+                    const dados =
+                        {
+                            produtos:
+                                produtos || [],
+
+                            despesas:
+                                typeof despesas !==
+                                    "undefined"
+                                    ? despesas
+                                    : [],
+
+                            comprasExtras:
+                                typeof comprasExtras !==
+                                    "undefined"
+                                    ? comprasExtras
+                                    : [],
+
+                            saldoInicial:
+                                typeof saldoInicial !==
+                                    "undefined"
+                                    ? saldoInicial
+                                    : 0,
+
+                            mesesLogs:
+                                typeof mesesLogs !==
+                                    "undefined"
+                                    ? mesesLogs
+                                    : [],
+
+                            mesAtualRef:
+                                typeof mesAtualRef !==
+                                    "undefined"
+                                    ? mesAtualRef
+                                    : "",
+
+                            exportadoEm:
+                                new Date().toISOString()
+                        };
+
+                    const json =
+                        JSON.stringify(
+                            dados,
+                            null,
+                            2
+                        );
+
+                    const nomeArquivo =
+                        "estoque-abrahao-" +
+                        new Date()
+                            .toISOString()
+                            .slice(0, 10) +
+                        ".json";
+
+                    const blob =
+                        new Blob(
+                            [json],
                             {
                                 type:
                                     "application/json"
                             }
                         );
 
+                    let podeCompartilhar =
+                        false;
+
                     if (
-                        navigator.canShare(
-                            {
-                                files:
-                                    [arquivo]
-                            }
-                        )
+                        typeof navigator.share ===
+                            "function" &&
+                        typeof navigator.canShare ===
+                            "function"
                     ) {
 
-                        navigator.share(
-                            {
-                                files:
-                                    [arquivo],
-                                title:
-                                    "Backup Sistema Abrahão",
-                                text:
-                                    "Backup dos dados do estoque"
-                            }
-                        ).then(
-                            function () {
-                                mostrarNotificacao(
-                                    "Dados exportados!",
-                                    "sucesso"
-                                );
-                            }
-                        ).catch(
-                            function () {
-                            }
-                        );
+                        try {
 
-                        return;
+                            const arquivo =
+                                new File(
+                                    [blob],
+                                    nomeArquivo,
+                                    {
+                                        type:
+                                            "application/json"
+                                    }
+                                );
+
+                            podeCompartilhar =
+                                navigator.canShare(
+                                    {
+                                        files:
+                                            [arquivo]
+                                    }
+                                ) === true;
+
+                            if (podeCompartilhar) {
+
+                                navigator.share(
+                                    {
+                                        files:
+                                            [arquivo],
+                                        title:
+                                            "Backup Sistema Abrahão",
+                                        text:
+                                            "Backup dos dados do estoque"
+                                    }
+                                ).then(
+                                    function () {
+                                        mostrarNotificacao(
+                                            "Dados exportados!",
+                                            "sucesso"
+                                        );
+                                    }
+                                ).catch(
+                                    function () {
+                                        baixarBackup(
+                                            blob,
+                                            nomeArquivo
+                                        );
+                                    }
+                                );
+
+                                return;
+
+                            }
+
+                        }
+                        catch (e) {
+
+                            podeCompartilhar =
+                                false;
+
+                        }
 
                     }
 
-                }
-
-                const url =
-                    URL.createObjectURL(
-                        blob
-                    );
-
-                const link =
-                    document.createElement(
-                        "a"
-                    );
-
-                link.href =
-                    url;
-
-                link.download =
-                    nomeArquivo;
-
-                document.body.appendChild(
-                    link
-                );
-
-                link.click();
-
-                document.body.removeChild(
-                    link
-                );
-
-                setTimeout(
-                    function () {
-                        URL.revokeObjectURL(
-                            url
+                    if (!podeCompartilhar) {
+                        baixarBackup(
+                            blob,
+                            nomeArquivo
                         );
-                    },
-                    100
-                );
+                    }
 
-                mostrarNotificacao(
-                    "Dados exportados com sucesso!",
-                    "sucesso"
-                );
+                }
+                catch (erro) {
+
+                    console.error(
+                        "Erro ao exportar dados:",
+                        erro
+                    );
+
+                    mostrarNotificacao(
+                        "Não foi possível exportar os dados.",
+                        "erro"
+                    );
+
+                }
 
             }
         );
